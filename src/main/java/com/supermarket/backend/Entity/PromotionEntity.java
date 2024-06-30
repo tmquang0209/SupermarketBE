@@ -35,6 +35,5 @@ public class PromotionEntity {
     private Date endDate;
 
     @Column(name = "create_at")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date createAt;
 }
