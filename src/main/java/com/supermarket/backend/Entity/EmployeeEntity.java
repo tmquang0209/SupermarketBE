@@ -16,7 +16,7 @@ public class EmployeeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     @Column(name = "username", unique = true)
     private String username;
@@ -33,7 +33,8 @@ public class EmployeeEntity {
     @Column(name = "role")
     private String role;
 
-    @Column(name = "department_id")
+    @ManyToOne
+    @JoinColumn(name = "department_id", referencedColumnName = "id")
     private DepartmentEntity department;
 
     @Column(name = "status")

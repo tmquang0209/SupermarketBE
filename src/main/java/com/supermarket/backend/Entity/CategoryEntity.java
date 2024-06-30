@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.sql.Date;
 
 @Entity
 @Data
@@ -27,9 +27,10 @@ public class CategoryEntity {
     @Column(name = "status")
     private boolean status = true;
 
-    @Column(name = "create_by")
+    @ManyToOne
+    @JoinColumn(name = "create_by", referencedColumnName = "id")
     private EmployeeEntity createBy;
 
     @Column(name = "create_at")
-    private Date createAt = new Date();
+    private Date createAt;
 }

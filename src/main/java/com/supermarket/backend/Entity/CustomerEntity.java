@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.sql.Date;
 
 @Entity
 @Data
@@ -40,6 +40,5 @@ public class CustomerEntity {
     private boolean status;
 
     @Column(name = "create_at")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date createAt;
 }

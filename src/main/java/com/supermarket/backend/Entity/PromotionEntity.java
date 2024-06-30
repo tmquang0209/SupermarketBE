@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.sql.Date;
 
 @Entity
 @Data
@@ -29,11 +29,9 @@ public class PromotionEntity {
     private String description;
 
     @Column(name = "start_date")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
 
     @Column(name = "end_date")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
 
     @Column(name = "create_at")

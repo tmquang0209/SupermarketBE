@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.sql.Date;
 
 @Entity
 @NoArgsConstructor
@@ -21,7 +21,8 @@ public class ProductEntity {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "cat_id")
+    @ManyToOne
+    @JoinColumn(name = "cat_id", referencedColumnName = "id")
     private CategoryEntity category;
 
     @Column(name = "unit_price")
@@ -36,16 +37,17 @@ public class ProductEntity {
     @Column(name = "description")
     private int description;
 
-    @Column(name = "vendor_id")
+    @ManyToOne
+    @JoinColumn(name = "vendor_id", referencedColumnName = "id")
     private VendorEntity vendor;
 
     @Column(name = "status")
     private boolean status = true;
 
-    @Column(name = "create_by")
+    @ManyToOne
+    @JoinColumn(name = "create_by", referencedColumnName = "id")
     private EmployeeEntity employee;
 
     @Column(name = "create_at")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date createAt;
 }

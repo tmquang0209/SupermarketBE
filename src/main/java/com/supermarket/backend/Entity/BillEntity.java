@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.sql.Date;
 
 @Entity
 @Data
@@ -42,6 +42,5 @@ public class BillEntity {
     private int paymentMethod;
 
     @Column(name = "create_at")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date createAt;
 }
