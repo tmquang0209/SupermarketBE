@@ -13,6 +13,6 @@ import java.util.List;
 @Setter
 public class ApiResponse<T> {
     private boolean success;
-    private List<T> data;
+    private T data;
     private String message;
 }
