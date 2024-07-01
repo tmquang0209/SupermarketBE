@@ -2,6 +2,7 @@ package com.supermarket.backend.Entity;
 
 import com.supermarket.backend.Enum.ERole;
 import com.supermarket.backend.Payload.Request.SignupRequest;
+import com.supermarket.backend.Payload.Request.UpdateInfoRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,6 +29,12 @@ public class EmployeeEntity {
 
     @Column(name = "email")
     private String email;
+
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
+    @Column(name = "address")
+    private String address;
 
     @Column(name = "full_name")
     private String fullName;
@@ -62,8 +69,40 @@ public class EmployeeEntity {
         this.email = signupRequest.getEmail();
         this.fullName = signupRequest.getFullName();
         this.birthday = signupRequest.getBirthDay();
+        this.address = signupRequest.getAddress();
+        this.phoneNumber = signupRequest.getPhoneNumber();
         this.role = signupRequest.getRole();
         this.department = signupRequest.getDepartment();
         this.status = true;
     }
+
+    public EmployeeEntity(UpdateInfoRequest updateInfoRequest){
+        this.username = updateInfoRequest.getUsername();
+        this.email = updateInfoRequest.getEmail();
+        this.fullName = updateInfoRequest.getFullName();
+        this.birthday = updateInfoRequest.getBirthDay();
+        this.address = updateInfoRequest.getAddress();
+        this.phoneNumber = updateInfoRequest.getPhoneNumber();
+        this.role = updateInfoRequest.getRole();
+        this.department = updateInfoRequest.getDepartment();
+        this.status = updateInfoRequest.isStatus();
+    }
+
+    @Override
+    public String toString() {
+        return "EmployeeEntity{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", address='" + address + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", birthday=" + birthday +
+                ", role=" + role +
+                ", department=" + (department != null ? department.getName() : null) +
+                ", status=" + status +
+                '}';
+    }
+
 }

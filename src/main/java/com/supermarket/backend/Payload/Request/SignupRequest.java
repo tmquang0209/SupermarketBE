@@ -17,6 +17,10 @@ public class SignupRequest {
 
     String email;
 
+    String phoneNumber;
+
+    String address;
+
     String fullName;
 
     Date birthDay;
