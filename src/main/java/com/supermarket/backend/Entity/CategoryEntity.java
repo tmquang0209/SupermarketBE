@@ -1,5 +1,6 @@
 package com.supermarket.backend.Entity;
 
+import com.supermarket.backend.Payload.Request.CategoryRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,4 +34,11 @@ public class CategoryEntity {
 
     @Column(name = "create_at")
     private Date createAt;
+
+    public CategoryEntity(CategoryRequest request, EmployeeEntity createBy){
+        this.name = request.getName();
+        this.description = request.getDescription();
+        this.status = request.isStatus();
+        this.createBy = createBy;
+    }
 }
