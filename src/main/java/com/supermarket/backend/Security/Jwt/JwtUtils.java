@@ -42,13 +42,16 @@ public class JwtUtils {
     }
 
     public String getUserNameFromJwtToken(String token) {
+        String accessToken = token.replace("Bearer ", "").trim();
         return Jwts.parserBuilder().setSigningKey(key()).build()
-                .parseClaimsJws(token).getBody().getSubject();
+                .parseClaimsJws(accessToken).getBody().getSubject();
     }
 
     public boolean validateJwtToken(String authToken) {
         try {
-            Jwts.parserBuilder().setSigningKey(key()).build().parse(authToken);
+            String accessToken = authToken.replace("Bearer ", "").trim();
+
+            Jwts.parserBuilder().setSigningKey(key()).build().parse(accessToken);
             return true;
         } catch (MalformedJwtException e) {
             logger.error("Invalid JWT token: {}", e.getMessage());
