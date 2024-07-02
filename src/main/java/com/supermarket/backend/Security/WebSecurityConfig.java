@@ -55,7 +55,8 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable()).exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/employee/signup", "/employee/login").permitAll().requestMatchers("/employee/**").authenticated());
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/employee/signup", "/employee/login").permitAll()
+                        .requestMatchers("/**").authenticated());
 
         http.authenticationProvider(authenticationProvider());
 
