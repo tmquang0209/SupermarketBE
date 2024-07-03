@@ -48,7 +48,7 @@ public class CategoryController {
     public ApiResponse<?> getAllCategories() {
         try {
             List<CategoryEntity> categoryEntities = categoryService.getAllCategories();
-            return new ApiResponse<>(false, categoryEntities, "Get all categories successful.");
+            return new ApiResponse<>(true, categoryEntities, "Get all categories successful.");
         } catch (Exception e) {
             e.printStackTrace();
             return new ApiResponse<>(false, null, e.getMessage());
@@ -59,7 +59,7 @@ public class CategoryController {
     public ApiResponse<?> searchByName(@RequestParam(value = "name") String name) {
         try {
             List<CategoryEntity> categoryEntities = categoryService.searchByName(name);
-            return new ApiResponse<>(false, categoryEntities, "Search successful.");
+            return new ApiResponse<>(true, categoryEntities, "Search successful.");
         } catch (Exception e) {
             e.printStackTrace();
             return new ApiResponse<>(false, null, e.getMessage());
@@ -70,7 +70,7 @@ public class CategoryController {
     public ApiResponse<?> getById(@PathVariable(name = "id") Integer id) {
         try {
             CategoryEntity categoryEntity = categoryService.getById(id);
-            return new ApiResponse<>(false, categoryEntity, "Get details successful.");
+            return new ApiResponse<>(true, categoryEntity, "Get details successful.");
         } catch (Exception e) {
             e.printStackTrace();
             return new ApiResponse<>(false, null, e.getMessage());
@@ -81,7 +81,7 @@ public class CategoryController {
     public ApiResponse<?> update(@PathVariable(name = "id") Integer id, @RequestHeader(value = "Authorization") String bearerToken, @Valid @RequestBody CategoryRequest request) {
         try {
             CategoryEntity categoryEntity = categoryService.update(id, request);
-            return new ApiResponse<>(false, categoryEntity, "Update category successful.");
+            return new ApiResponse<>(true, categoryEntity, "Update category successful.");
         } catch (Exception e) {
             e.printStackTrace();
             return new ApiResponse<>(false, null, e.getMessage());
@@ -92,7 +92,7 @@ public class CategoryController {
     public ApiResponse<?> delete(@PathVariable(name = "id") Integer id, @RequestHeader(value = "Authorization") String bearerToken) {
         try {
             categoryService.delete(id);
-            return new ApiResponse<>(false, null, "Delete category successful.");
+            return new ApiResponse<>(true, null, "Delete category successful.");
         } catch (Exception e) {
             e.printStackTrace();
             return new ApiResponse<>(false, null, e.getMessage());
