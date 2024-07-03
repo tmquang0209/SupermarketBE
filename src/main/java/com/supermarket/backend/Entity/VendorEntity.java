@@ -1,5 +1,6 @@
 package com.supermarket.backend.Entity;
 
+import com.supermarket.backend.Payload.Request.VendorRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,4 +28,19 @@ public class VendorEntity {
 
     @Column(name = "address")
     private String address;
+
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "status")
+    private boolean status = true;
+
+    public VendorEntity(VendorRequest request){
+        this.name = request.getName();
+        this.phoneNumber = request.getPhoneNumber();
+        this.email = request.getEmail();
+        this.address = request.getAddress();
+        this.description = request.getDescription();
+        this.status = request.isStatus();
+    }
 }
