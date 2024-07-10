@@ -1,5 +1,6 @@
 package com.supermarket.backend.Security;
 
+import com.supermarket.backend.Enum.ERole;
 import com.supermarket.backend.Security.Jwt.AuthEntryPointJwt;
 import com.supermarket.backend.Security.Jwt.AuthTokenFilter;
 import com.supermarket.backend.Service.CustomUserDetailsService;
@@ -55,7 +56,8 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable()).exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/employee/signup", "/employee/login").permitAll()
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/employee/login").permitAll()
+                        .requestMatchers("create", "/employee/signup").hasAuthority(ERole.MANAGER.toString())
                         .requestMatchers("/**").authenticated());
 
         http.authenticationProvider(authenticationProvider());

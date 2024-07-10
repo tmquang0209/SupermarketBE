@@ -1,5 +1,6 @@
 package com.supermarket.backend.Entity;
 
+import com.supermarket.backend.Payload.Request.ProductRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,10 +33,10 @@ public class ProductEntity {
     private String unit;
 
     @Column(name = "in_stock")
-    private int inStock;
+    private int inStock = 0;
 
     @Column(name = "description")
-    private int description;
+    private String description;
 
     @ManyToOne
     @JoinColumn(name = "vendor_id", referencedColumnName = "id")
@@ -50,4 +51,16 @@ public class ProductEntity {
 
     @Column(name = "create_at")
     private Date createAt;
+
+    public ProductEntity(ProductRequest request){
+        this.name = request.getName();
+        this.category = request.getCategory();
+        this.unit = request.getUnit();
+        this.unitPrice = request.getUnitPrice();
+        this.inStock = request.getInStock();
+        this.description = request.getDescription();
+        this.vendor = request.getVendor();
+        this.status = request.isStatus();
+        this.employee = request.getEmployee();
+    }
 }
