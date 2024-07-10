@@ -1,5 +1,6 @@
 package com.supermarket.backend.Entity;
 
+import com.supermarket.backend.Payload.Request.DepartmentRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,4 +27,9 @@ public class DepartmentEntity {
 
     @Column(name = "create_at")
     private Date createAt;
+
+    public DepartmentEntity(DepartmentRequest request){
+        this.name = request.getName();
+        this.description = request.getDescription();
+    }
 }
