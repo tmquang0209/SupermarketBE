@@ -1,5 +1,7 @@
 package com.supermarket.backend.Entity;
 
+import com.supermarket.backend.Enum.EType;
+import com.supermarket.backend.Payload.Request.CustomerRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,18 +29,28 @@ public class CustomerEntity {
     @Column(name = "address", columnDefinition = "MEDIUMTEXT")
     private String address;
 
-    @Column(name = "phone_number", length = 255)
+    @Column(name = "phone_number", length = 11, unique = true)
     private String phoneNumber;
 
     @Column(name = "point")
     private int point;
 
     @Column(name = "type", length = 10)
-    private String type;
+    private EType type = EType.BRONZE;
 
     @Column(name = "status")
-    private boolean status;
+    private boolean status = true;
 
     @Column(name = "create_at")
     private Date createAt;
+
+    public CustomerEntity(CustomerRequest request) {
+        this.fullName = request.getFullName();
+        this.birthday = request.getBirthday();
+        this.address = request.getAddress();
+        this.phoneNumber = request.getPhoneNumber();
+        this.point = request.getPoint();
+        this.type = request.getType();
+        this.status = request.isStatus();
+    }
 }
