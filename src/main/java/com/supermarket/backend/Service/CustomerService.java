@@ -60,4 +60,14 @@ public class CustomerService {
 
         customerRepository.deleteById(id);
     }
+
+    public void minusPoint(Integer id, int point){
+        CustomerEntity customer = getById(id);
+        customer.setPoint(customer.getPoint() - point);
+        customerRepository.save(customer);
+    }
+
+    public boolean checkPoint(Integer id, int point){
+        return getById(id).getPoint() > point;
+    }
 }
