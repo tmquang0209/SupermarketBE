@@ -1,5 +1,6 @@
 package com.supermarket.backend.Entity;
 
+import com.supermarket.backend.Payload.Request.PromotionRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,6 +22,9 @@ public class PromotionEntity {
     @Column(name = "code", length = 10)
     private String code;
 
+    @Column(name = "discount")
+    private float discount;
+
     @ManyToOne
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private CustomerEntity customer;
@@ -36,4 +40,12 @@ public class PromotionEntity {
 
     @Column(name = "create_at")
     private Date createAt;
+
+    public PromotionEntity(PromotionRequest request) {
+        this.code = request.getCode();
+        this.customer = request.getCustomer();
+        this.description = request.getDescription();
+        this.startDate = request.getStartDate();
+        this.endDate = request.getEndDate();
+    }
 }
