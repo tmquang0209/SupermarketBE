@@ -29,4 +29,11 @@ public class BillDetailsEntity {
 
     @Column(name = "unit_price")
     private float unitPrice;
+
+    public BillDetailsEntity(BillEntity bill, ProductEntity product, int qty, float unitPrice) {
+        this.bill = bill;
+        this.product = product;
+        this.qty = qty;
+        this.unitPrice = unitPrice;
+    }
 }

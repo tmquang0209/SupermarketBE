@@ -1,11 +1,13 @@
 package com.supermarket.backend.Entity;
 
+import com.supermarket.backend.Enum.EPayment;
+import com.supermarket.backend.Payload.Request.BillRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
+import java.util.Date;
 
 @Entity
 @Data
@@ -39,8 +41,19 @@ public class BillEntity {
     private int point;
 
     @Column(name = "payment_method")
-    private int paymentMethod;
+    @Enumerated(EnumType.STRING)
+    private EPayment paymentMethod;
 
     @Column(name = "create_at")
-    private Date createAt;
+    private Date createAt = new Date();
+
+    public BillEntity(BillRequest request){
+        this.employee = request.getEmployee();
+        this.customer = request.getCustomer();
+        this.type = request.getType();
+        this.discount = request.getDiscount();
+        this.promotionCode = request.getPromotionCode();
+        this.point = request.getPoint();
+        this.paymentMethod = request.getPaymentMethod();
+    }
 }
