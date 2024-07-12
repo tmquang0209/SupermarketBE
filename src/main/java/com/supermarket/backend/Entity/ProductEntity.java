@@ -19,6 +19,9 @@ public class ProductEntity {
     @Column(name = "id")
     private int id;
 
+    @Column(name = "barcode", unique = true)
+    private String barcode;
+
     @Column(name = "name")
     private String name;
 

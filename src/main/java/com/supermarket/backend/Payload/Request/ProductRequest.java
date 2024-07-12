@@ -10,6 +10,9 @@ import lombok.Data;
 
 @Data
 public class ProductRequest {
+    @NotBlank(message = "Barcode is required")
+    private String barcode;
+
     @NotBlank(message = "Name is required")
     private String name;
 
