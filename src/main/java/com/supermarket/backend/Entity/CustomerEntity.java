@@ -44,6 +44,10 @@ public class CustomerEntity {
     @Column(name = "create_at")
     private Date createAt;
 
+    public CustomerEntity(int id) {
+        this.id = id;
+    }
+
     public CustomerEntity(CustomerRequest request) {
         this.fullName = request.getFullName();
         this.birthday = request.getBirthday();

@@ -13,8 +13,8 @@ import java.util.List;
 public class BillRequest {
     private EmployeeEntity employee;
 
-    @NotNull(message = "Customer id is required")
-    private CustomerEntity customer;
+//    @NotNull(message = "Customer id is required")
+    private CustomerEntity customer = new CustomerEntity(-1);
 
     private String type;
 
