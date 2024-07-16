@@ -3,6 +3,7 @@ package com.supermarket.backend.Payload.Dto;
 import com.supermarket.backend.Entity.CustomerEntity;
 import com.supermarket.backend.Entity.EmployeeEntity;
 import com.supermarket.backend.Enum.EPayment;
+import com.supermarket.backend.Payload.Response.EmployeeResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 public class BillDTO {
     private Integer id;
-    private EmployeeEntity employee;
+    private EmployeeResponse employee;
     private CustomerEntity customer;
     private String type;
     private float discount;
@@ -26,7 +27,7 @@ public class BillDTO {
 
     public BillDTO(Integer id, EmployeeEntity employee, CustomerEntity customer, String type, float discount, String promotionCode, int point, EPayment paymentMethod) {
         this.id = id;
-        this.employee = employee;
+        this.employee = new EmployeeResponse(employee);
         this.customer = customer;
         this.type = type;
         this.discount = discount;

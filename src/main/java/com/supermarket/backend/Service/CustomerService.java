@@ -53,6 +53,23 @@ public class CustomerService {
         return customerRepository.save(customer);
     }
 
+    public CustomerEntity update(Integer id, CustomerEntity data) {
+        Optional<CustomerEntity> optionalCustomer = customerRepository.findById(id);
+
+        if (optionalCustomer.isEmpty()) throw new RuntimeException("Customer does not exist.");
+
+        CustomerEntity customer = optionalCustomer.get();
+        customer.setFullName(data.getFullName());
+        customer.setBirthday(data.getBirthday());
+        customer.setAddress(data.getAddress());
+        customer.setPhoneNumber(data.getPhoneNumber());
+        customer.setPoint(data.getPoint());
+        customer.setType(data.getType());
+        customer.setStatus(data.isStatus());
+
+        return customerRepository.save(customer);
+    }
+
     public void delete(Integer id) {
         Optional<CustomerEntity> optionalCustomer = customerRepository.findById(id);
 
