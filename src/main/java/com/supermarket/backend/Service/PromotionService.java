@@ -58,5 +58,4 @@ public class PromotionService {
 
         promotionRepository.deleteById(id);
     }
-
 }
