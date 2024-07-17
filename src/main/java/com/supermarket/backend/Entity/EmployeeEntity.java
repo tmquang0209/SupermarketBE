@@ -43,6 +43,7 @@ public class EmployeeEntity {
     private Date birthday;
 
     @Column(name = "role")
+    @Enumerated(EnumType.STRING)
     private ERole role;
 
     @ManyToOne
