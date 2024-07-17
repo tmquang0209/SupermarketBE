@@ -59,7 +59,8 @@ public class EmployeeController {
             if (create != null)
                 return new ApiResponse<>(true, create, "Create employee successful.");
             else
-                return new ApiResponse<>(true, null, "The employee already exists with the username " + data.getUsername());
+                return new ApiResponse<>(true, null,
+                        "The employee already exists with the username " + data.getUsername());
         } catch (Exception exception) {
             exception.printStackTrace();
             return new ApiResponse<>(true, null, exception.getMessage());
@@ -69,12 +70,6 @@ public class EmployeeController {
     @PostMapping("/login")
     public ApiResponse<?> login(@RequestBody LoginRequest loginRequest) {
         try {
-
-
-            log.info(passwordEncoder.encode(loginRequest.getPassword()));
-
-            System.out.println(loginRequest);
-
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
@@ -85,7 +80,8 @@ public class EmployeeController {
 
             EmployeeEntity employee = employeeService.getById(userDetails.getId());
             assert employee != null;
-            if (!employee.isStatus()) throw new Exception("The account is disable.");
+            if (!employee.isStatus())
+                throw new Exception("The account is disable.");
 
             Map<String, String> tokenMap = new HashMap<>();
             tokenMap.put("token", jwt);
@@ -101,13 +97,16 @@ public class EmployeeController {
         String accessToken = bearerToken.replace("Bearer ", "");
         try {
             boolean isValidToken = jwtUtils.validateJwtToken(accessToken);
-            if (!isValidToken) throw new Exception("Invalid Token");
+            if (!isValidToken)
+                throw new Exception("Invalid Token");
 
             String username = jwtUtils.getUserNameFromJwtToken(accessToken);
             EmployeeEntity employee = employeeRepository.findByUsername(username).orElse(null);
-            if (employee == null) throw new Exception("Can not find username: " + username);
+            if (employee == null)
+                throw new Exception("Can not find username: " + username);
 
-            if (employee.getRole() != ERole.MANAGER) throw new Exception("You do not have this permission.");
+            if (employee.getRole() != ERole.MANAGER)
+                throw new Exception("You do not have this permission.");
 
             List<EmployeeEntity> employeeList = employeeService.getAll();
             return new ApiResponse<>(true, employeeList, "Get employee list successful.");
@@ -121,11 +120,13 @@ public class EmployeeController {
         String accessToken = bearerToken.replace("Bearer ", "").trim();
         boolean isValidToken = jwtUtils.validateJwtToken(accessToken);
         try {
-            if (!isValidToken) throw new Exception("Invalid token");
+            if (!isValidToken)
+                throw new Exception("Invalid token");
 
             String username = jwtUtils.getUserNameFromJwtToken(accessToken);
             EmployeeEntity employee = employeeRepository.findByUsername(username).orElse(null);
-            if (employee == null) throw new UsernameNotFoundException("Can not find username: " + username);
+            if (employee == null)
+                throw new UsernameNotFoundException("Can not find username: " + username);
             return new ApiResponse<>(true, employee, "Get personal info successful.");
         } catch (Exception e) {
             e.printStackTrace();
@@ -134,15 +135,18 @@ public class EmployeeController {
     }
 
     @PutMapping("/update/{id}")
-    public ApiResponse<?> updateInfo(@PathVariable Integer id, @RequestHeader(value = "Authorization") String bearerToken, @RequestBody UpdateInfoRequest data) {
+    public ApiResponse<?> updateInfo(@PathVariable Integer id,
+            @RequestHeader(value = "Authorization") String bearerToken, @RequestBody UpdateInfoRequest data) {
         String accessToken = bearerToken.replace("Bearer ", "").trim();
         boolean isValidToken = jwtUtils.validateJwtToken(accessToken);
         try {
-            if (!isValidToken) throw new Exception("Invalid token");
+            if (!isValidToken)
+                throw new Exception("Invalid token");
 
             String username = jwtUtils.getUserNameFromJwtToken(accessToken);
             EmployeeEntity employee = employeeRepository.findByUsername(username).orElse(null);
-            if (employee == null) throw new UsernameNotFoundException("Can not find username: " + username);
+            if (employee == null)
+                throw new UsernameNotFoundException("Can not find username: " + username);
 
             EmployeeEntity employeeEntity = new EmployeeEntity(data);
 
@@ -155,19 +159,24 @@ public class EmployeeController {
     }
 
     @PutMapping("/changePassword")
-    public ApiResponse<?> changePassword(@RequestHeader(value = "Authorization") String bearerToken, @RequestBody ChangePasswordRequest data) {
+    public ApiResponse<?> changePassword(@RequestHeader(value = "Authorization") String bearerToken,
+            @RequestBody ChangePasswordRequest data) {
         String accessToken = bearerToken.replace("Bearer ", "").trim();
         boolean isValidToken = jwtUtils.validateJwtToken(accessToken);
         try {
-            if (!isValidToken) throw new Exception("Invalid token");
+            if (!isValidToken)
+                throw new Exception("Invalid token");
 
             String username = jwtUtils.getUserNameFromJwtToken(accessToken);
             EmployeeEntity employee = employeeRepository.findByUsername(username).orElse(null);
-            if (employee == null) throw new UsernameNotFoundException("Can not find username: " + username);
+            if (employee == null)
+                throw new UsernameNotFoundException("Can not find username: " + username);
 
-            if (!passwordEncoder.matches(data.getOldPassword(), employee.getPassword())) throw new Exception("Old password is incorrect.");
+            if (!passwordEncoder.matches(data.getOldPassword(), employee.getPassword()))
+                throw new Exception("Old password is incorrect.");
 
-            if (!data.getNewPassword().equals(data.getConfirmPassword())) throw new Exception("New password and confirm password are not same.");
+            if (!data.getNewPassword().equals(data.getConfirmPassword()))
+                throw new Exception("New password and confirm password are not same.");
 
             String hashPassword = passwordEncoder.encode(data.getNewPassword());
             EmployeeEntity update = employeeService.changePassword(employee.getId(), hashPassword);
