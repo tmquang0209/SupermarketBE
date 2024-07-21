@@ -30,6 +30,15 @@ public class PromotionService {
         return promotionRepository.findByCode(code).orElse(null);
     }
 
+    public PromotionEntity getByCode(int customerId, String code) {
+        PromotionEntity promotion = promotionRepository.findByCode(code).orElse(null);
+        assert promotion != null;
+        if (promotion.getCustomer().getId() == customerId) {
+            return promotion;
+        }
+        return null;
+    }
+
     public PromotionEntity savePromotion(PromotionEntity promotionEntity) {
         return promotionRepository.save(promotionEntity);
     }

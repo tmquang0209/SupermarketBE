@@ -88,7 +88,7 @@ public class BillController {
 
     private void handlePromotion(BillRequest request) throws Exception {
         if (request.getPromotionCode() != null) {
-            PromotionEntity promotionEntity = promotionService.getByCode(request.getPromotionCode());
+            PromotionEntity promotionEntity = promotionService.getByCode(request.getCustomer().getId(), request.getPromotionCode());
             if (promotionEntity == null) {
                 throw new Exception("No promotional code found.");
             }
