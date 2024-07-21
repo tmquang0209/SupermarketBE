@@ -3,8 +3,10 @@ package com.supermarket.backend.Controller;
 import com.supermarket.backend.Entity.EmployeeEntity;
 import com.supermarket.backend.Entity.VendorEntity;
 import com.supermarket.backend.Enum.ERole;
+import com.supermarket.backend.Payload.Dto.EmailDetails;
 import com.supermarket.backend.Payload.Request.VendorRequest;
 import com.supermarket.backend.Security.Jwt.JwtUtils;
+import com.supermarket.backend.Service.EmailServiceImpl;
 import com.supermarket.backend.Service.EmployeeServiceImpl;
 import com.supermarket.backend.Service.VendorService;
 import com.supermarket.backend.Util.ApiResponse;
@@ -26,6 +28,9 @@ public class VendorController {
     @Autowired
     private VendorService vendorService;
 
+    @Autowired
+    private EmailServiceImpl emailService;
+
     @PostMapping("/create")
     public ApiResponse<?> createVendor(@RequestHeader(value = "Authorization") String bearerToken, @Valid @RequestBody VendorRequest request) {
         try {
@@ -35,7 +40,8 @@ public class VendorController {
             String username = jwtUtils.getUserNameFromJwtToken(bearerToken);
             EmployeeEntity employee = employeeService.getByUsername(username);
 
-            if(employee.getRole().name().equals(ERole.MANAGER.toString())) throw new Exception("You do not have this permission");
+            if (employee.getRole().name().equals(ERole.MANAGER.toString()))
+                throw new Exception("You do not have this permission");
 
             VendorEntity newVendor = new VendorEntity(request);
             newVendor = vendorService.saveVendor(newVendor);
@@ -95,6 +101,17 @@ public class VendorController {
         try {
             vendorService.delete(id);
             return new ApiResponse<>(true, null, "Delete category successful.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ApiResponse<>(false, null, e.getMessage());
+        }
+    }
+
+    @PostMapping("/sendMail")
+    public ApiResponse<?> sendMail(@RequestBody EmailDetails details) {
+        try {
+            String rs = emailService.sendSimpleMail(details);
+            return new ApiResponse<>(true, null, "Mail send successfully.");
         } catch (Exception e) {
             e.printStackTrace();
             return new ApiResponse<>(false, null, e.getMessage());
