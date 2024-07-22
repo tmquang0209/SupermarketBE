@@ -50,6 +50,18 @@ public class ProductService {
         return productRepository.save(product);
     }
 
+    public ProductEntity updateQuantity(Integer id, int qty) {
+        Optional<ProductEntity> optionalProduct = productRepository.findById(id);
+
+        if (optionalProduct.isEmpty()) throw new RuntimeException("Product does not exist.");
+
+        ProductEntity product = optionalProduct.get();
+
+        product.setInStock(product.getInStock() + qty);
+
+        return productRepository.save(product);
+    }
+
     public void delete(Integer id) {
         Optional<ProductEntity> optionalProduct = productRepository.findById(id);
 

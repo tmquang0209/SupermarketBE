@@ -116,6 +116,8 @@ public class BillController {
             ProductEntity product = productService.getById(cartItem.getProductId());
             if (product == null) {
                 throw new Exception("No product found with id: " + cartItem.getProductId());
+            } else if (product.getInStock() - cartItem.getQty() < 0) {
+                throw new Exception("Quantity in stocks is not enough.");
             }
             total += product.getUnitPrice();
         }
@@ -139,6 +141,8 @@ public class BillController {
             ProductEntity product = productService.getById(cartItem.getProductId());
             BillDetailsEntity billDetailsEntity = new BillDetailsEntity(bill, product, cartItem.getQty(), product.getUnitPrice());
             billDetailsService.save(billDetailsEntity);
+
+            productService.updateQuantity(cartItem.getProductId(), -cartItem.getQty());
         }
     }
 
