@@ -12,7 +12,7 @@ public class PromotionRequest {
     @NotBlank(message = "Code is required")
     private String code;
 
-    @NotBlank(message = "Discount value is required")
+    @NotNull(message = "Discount value is required")
     private float discount;
 
     @NotNull(message = "Customer is not null")
