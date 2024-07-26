@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @RequestMapping("/employee")
 @RestController
@@ -136,7 +137,7 @@ public class EmployeeController {
 
     @PutMapping("/update/{id}")
     public ApiResponse<?> updateInfo(@PathVariable Integer id,
-            @RequestHeader(value = "Authorization") String bearerToken, @RequestBody UpdateInfoRequest data) {
+                                     @RequestHeader(value = "Authorization") String bearerToken, @RequestBody UpdateInfoRequest data) {
         String accessToken = bearerToken.replace("Bearer ", "").trim();
         boolean isValidToken = jwtUtils.validateJwtToken(accessToken);
         try {
@@ -148,7 +149,11 @@ public class EmployeeController {
             if (employee == null)
                 throw new UsernameNotFoundException("Can not find username: " + username);
 
+            if (!Objects.equals(employee.getId(), id)) throw new UsernameNotFoundException("ID is not same with access token");
+
             EmployeeEntity employeeEntity = new EmployeeEntity(data);
+
+            System.out.println("Birthday: " + data.getBirthDay());
 
             EmployeeEntity update = employeeService.update(id, employeeEntity);
             return new ApiResponse<>(true, update, "Update successful.");
@@ -160,7 +165,7 @@ public class EmployeeController {
 
     @PutMapping("/changePassword")
     public ApiResponse<?> changePassword(@RequestHeader(value = "Authorization") String bearerToken,
-            @RequestBody ChangePasswordRequest data) {
+                                         @RequestBody ChangePasswordRequest data) {
         String accessToken = bearerToken.replace("Bearer ", "").trim();
         boolean isValidToken = jwtUtils.validateJwtToken(accessToken);
         try {

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/customer")
@@ -82,6 +83,7 @@ public class CustomerController {
     public ApiResponse<?> update(@PathVariable(name = "id") Integer id, @RequestHeader(value = "Authorization") String bearerToken, @Valid @RequestBody CustomerRequest request) {
         try {
             CustomerEntity customerEntity = customerService.update(id, request);
+
             return new ApiResponse<>(true, customerEntity, "Update customer successful.");
         } catch (Exception e) {
             e.printStackTrace();

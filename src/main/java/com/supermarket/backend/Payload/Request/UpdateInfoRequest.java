@@ -5,7 +5,7 @@ import com.supermarket.backend.Enum.ERole;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
-import java.sql.Date;
+import java.util.Date;
 
 @Data
 public class UpdateInfoRequest {
