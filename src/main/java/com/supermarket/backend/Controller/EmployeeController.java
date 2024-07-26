@@ -149,7 +149,7 @@ public class EmployeeController {
             if (employee == null)
                 throw new UsernameNotFoundException("Can not find username: " + username);
 
-            if (!Objects.equals(employee.getId(), id)) throw new UsernameNotFoundException("ID is not same with access token");
+            if (!Objects.equals(employee.getId(), id) || employee.getRole() != ERole.MANAGER) throw new UsernameNotFoundException("ID is not same with access token");
 
             EmployeeEntity employeeEntity = new EmployeeEntity(data);
 
