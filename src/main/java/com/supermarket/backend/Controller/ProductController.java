@@ -68,6 +68,17 @@ public class ProductController {
         }
     }
 
+    @GetMapping("/barcode")
+    public ApiResponse<?> getByBarcode(@RequestParam(value = "barcode") String barcode) {
+        try {
+            ProductEntity productEntity = productService.getByBarcode(barcode);
+            return new ApiResponse<>(true, productEntity, "Get successful.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ApiResponse<>(false, null, e.getMessage());
+        }
+    }
+
     @GetMapping("/{id}/details")
     public ApiResponse<?> getById(@PathVariable(name = "id") Integer id) {
         try {

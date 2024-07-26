@@ -15,6 +15,8 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Integer>
     boolean existsByName(String name);
     Optional<ProductEntity> findById(Integer id);
 
+    Optional<ProductEntity> findByBarcode(String barcode);
+
     @Query("SELECT P FROM ProductEntity P WHERE name LIKE %:name%")
     List<ProductEntity> searchByName(@Param(value = "name") String name);
 }

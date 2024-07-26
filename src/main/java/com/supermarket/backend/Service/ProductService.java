@@ -22,6 +22,10 @@ public class ProductService {
         return productRepository.searchByName(name);
     }
 
+    public ProductEntity getByBarcode(String barcode) {
+        return productRepository.findByBarcode(barcode).orElse(null);
+    }
+
     public ProductEntity getById(Integer id) {
         return productRepository.findById(id).orElse(null);
     }
@@ -38,6 +42,7 @@ public class ProductService {
         if (optionalProduct.isEmpty()) throw new RuntimeException("Product does not exist.");
 
         ProductEntity product = optionalProduct.get();
+        product.setBarcode(productRequest.getBarcode());
         product.setName(productRequest.getName());
         product.setUnitPrice(productRequest.getUnitPrice());
         product.setUnit(productRequest.getUnit());

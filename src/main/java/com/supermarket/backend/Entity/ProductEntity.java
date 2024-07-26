@@ -56,6 +56,7 @@ public class ProductEntity {
     private Date createAt;
 
     public ProductEntity(ProductRequest request){
+        this.barcode = request.getBarcode();
         this.name = request.getName();
         this.category = request.getCategory();
         this.unit = request.getUnit();
