@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BillService {
@@ -19,8 +20,12 @@ public class BillService {
     @Autowired
     private BillDetailsRepository billDetailsRepository;
 
-    public List<BillEntity> getDetails(Integer id) {
+    public List<BillEntity> getAll() {
         return billRepository.findAll();
+    }
+
+    public BillEntity getDetails(Integer id) {
+        return billRepository.findById(id).orElse(null);
     }
 
     public BillEntity save(BillEntity bill) {

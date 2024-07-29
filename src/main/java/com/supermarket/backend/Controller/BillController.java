@@ -164,4 +164,9 @@ public class BillController {
     public ApiResponse<?> getDetails(@PathVariable(value = "id") int id) {
         return new ApiResponse<>(true, billInfoService.getBillInfoById(id), "Get bill details successful.");
     }
+
+    @GetMapping("/all")
+    public ApiResponse<?> getAllBills() {
+        return new ApiResponse<>(true, billService.getAll(), "Get all bills successful.");
+    }
 }
